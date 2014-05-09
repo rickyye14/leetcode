@@ -41,7 +41,7 @@ public class TwoSum {
 
     private int partition(int[] numbers, int[] ids, int lo, int hi) {
         /**
-         * @brief Need 3-median optimization if numbers is sorted
+         * @brief Need 3-median optimization if numbers are sorted
          */
         int m = median3(numbers, lo, (lo + hi) / 2, hi);
         swap(numbers, lo, m);
