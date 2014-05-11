@@ -5,6 +5,8 @@ JC = javac
 	$(JC) $(JFLAGS) $*.java
 
 CLASSES = \
+		  LongestPalindromicSubstring.java \
+		  AddTwoNumbers.java \
 		  LongestSubstringWithoutRepeatingCharacters.java \
 		  MedianOfTwoSortedArrays.java \
 		  TwoSum.java
