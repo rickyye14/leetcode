@@ -1,3 +1,10 @@
+/**
+ * The basic idea is simple. At first, sort the <code>num</code> array. Then,
+ * enumerate the value of <t>a</t> and <t>b</t>. Duplicate triples should be
+ * considered. Finally, we use the binary search to find the number <t>c</t>.
+ * Thus, we get a triple we need.
+ */
+
 import java.util.Arrays;
 import java.util.ArrayList;
 
@@ -13,19 +20,23 @@ public class ThreeSum {
         }
         Arrays.sort(num);
         for (int i = 0; i < n - 2; ++i) {
-            if (i != 0 && num[i] == num[i + 1]) {
+            /**
+             * ensure that there is no duplicate triples
+             */
+            if (i != 0 && num[i - 1] == num[i]) {
                 continue;
             }
             for (int j = i + 1; j < n - 1; ++j) {
-                int target = -num[i] - num[j];
                 /**
-                 * Mistake in target < num[j]
+                 * if remove the condition <code>j != i + 1</code>, 
+                 * to test data [0, 0, 0], it will give a wrong answer.
                  */
-                if (target < num[j + 1]) {
-                    break;
+                if (j != i + 1 && num[j - 1] == num[j]) {
+                    continue;
                 }
-                if (target > num[n - 1]) {
-                    break;
+                int target = 0 - num[i] - num[j];
+                if (target < num[j + 1] || target > num[n - 1]) {
+                    continue;
                 }
                 int low = j + 1;
                 int high = n - 1;
@@ -37,16 +48,7 @@ public class ThreeSum {
                         token.add(num[i]);
                         token.add(num[j]);
                         token.add(num[mid]);
-                        if (res.size() == 0) {
-                            res.add(token);
-                        } else {
-                            ArrayList<Integer> last = res.get(res.size() - 1);
-                            if (token.get(0) != last.get(0) 
-                                    || token.get(1) != last.get(1) 
-                                    || token.get(2) != last.get(2)) {
-                                res.add(token);
-                            }
-                        }
+                        res.add(token);
                         break;
                     } else if (num[mid] < target) {
                         low = mid + 1;
@@ -59,33 +61,8 @@ public class ThreeSum {
         return res;
     }
 
-    public void displayResult(ArrayList<ArrayList<Integer>> res) {
-        if (res == null) {
-            return;
-        }
-        int n = res.size();
-        for (int i = 0; i < n; ++i) {
-            String token = "";
-            for (int j = 0; j < res.get(i).size(); ++j) {
-                System.out.print(token + res.get(i).get(j));
-                token = ", ";
-            }
-            System.out.println();
-        }
-    }
-
     public static void main(String[] args) {
         ThreeSum solution = new ThreeSum();
         int[] num = null;
-
-        num = new int[] {-1, 0, 1, 2, -1, -4};
-        solution.displayResult(solution.threeSum(num));
-
-        num = new int[] {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
-        solution.displayResult(solution.threeSum(num));
-
-        num = new int[] {1, -1, -1, 0};
-        solution.displayResult(solution.threeSum(num));
-
     }
 }
