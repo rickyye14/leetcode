@@ -5,6 +5,17 @@ JC = javac
 	$(JC) $(JFLAGS) $*.java
 
 CLASSES = \
+		  GenerateParentheses.java \
+		  ThreeSum.java \
+		  LongestCommonPrefix.java \
+		  RomanToInteger.java \
+		  IntegerToRoman.java \
+		  ContainerWithMostWater.java \
+		  RegularExpressionMatching.java \
+		  PalindromeNumber.java \
+		  StringToInteger.java \
+		  ReverseInteger.java \
+		  ZigZagConversion.java \
 		  LongestPalindromicSubstring.java \
 		  AddTwoNumbers.java \
 		  LongestSubstringWithoutRepeatingCharacters.java \
