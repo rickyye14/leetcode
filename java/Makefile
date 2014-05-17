@@ -6,12 +6,19 @@ JC = javac
 
 CLASSES = \
 		  ListNode.java \
+		  RemoveDuplicatesFromSortedArray.java \
+		  ReverseNodesInKGroup.java \
+		  SwapNodesInPairs.java \
+		  MergeKSortedLists.java \
 		  GenerateParentheses.java \
+		  ValidParentheses.java \
 		  RemoveNthNodeFromEndOfList.java \
 		  LetterCombinationsOfAPhoneNumber.java \
 		  FourSum.java \
 		  ThreeSumClosest.java \
 		  ThreeSum.java \
+		  LongestCommonPrefix.java \
+		  RomanToInteger.java \
 		  IntegerToRoman.java \
 		  ContainerWithMostWater.java \
 		  RegularExpressionMatching.java \
