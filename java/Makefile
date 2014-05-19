@@ -6,6 +6,7 @@ JC = javac
 
 CLASSES = \
 		  ListNode.java \
+		  DivideTwoIntegers.java \
 		  RemoveElement.java \
 		  RemoveDuplicatesFromSortedArray.java \
 		  ReverseNodesInKGroup.java \
