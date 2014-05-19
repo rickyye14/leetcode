@@ -6,6 +6,7 @@ JC = javac
 
 CLASSES = \
 		  ListNode.java \
+		  LongestValidParentheses.java \
 		  DivideTwoIntegers.java \
 		  RemoveElement.java \
 		  RemoveDuplicatesFromSortedArray.java \
