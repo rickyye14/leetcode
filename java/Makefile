@@ -6,6 +6,8 @@ JC = javac
 
 CLASSES = \
 		  ListNode.java \
+		  SearchInRotatedSortedArray.java \
+		  SubstringWithConcatenationOfAllWords.java \
 		  LongestValidParentheses.java \
 		  DivideTwoIntegers.java \
 		  RemoveElement.java \
