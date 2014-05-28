@@ -6,6 +6,40 @@ JC = javac
 
 CLASSES = \
 		  ListNode.java \
+		  Interval.java \
+		  SearchA2DMatrix.java \
+		  SetMatrixZeroes.java \
+		  EditDistance.java \
+		  SimplifyPath.java \
+		  ClimbingStairs.java \
+		  SqrtX.java \
+		  TextJustification.java \
+		  ValidNumber.java \
+		  RotateList.java \
+		  LengthOfLastWord.java \
+		  InsertInterval.java \
+		  MergeIntervals.java \
+		  JumpGame.java \
+		  SpiralMatrix.java \
+		  NQueensII.java \
+		  NQueens.java \
+		  Pow.java \
+		  Anagrams.java \
+		  RotateImage.java \
+		  PermutationsII.java \
+		  Permutations.java \
+		  JumpGameII.java \
+		  WildcardMatching.java \
+		  MultiplyStrings.java \
+		  TrappingRainWater.java \
+		  FirstMissingPositive.java \
+		  CombinationSumII.java \
+		  CombinationSum.java \
+		  CountAndSay.java \
+		  SudokuSolver.java \
+		  ValidSudoku.java \
+		  SearchInsertPosition.java \
+		  SearchForARange.java \
 		  SearchInRotatedSortedArray.java \
 		  SubstringWithConcatenationOfAllWords.java \
 		  LongestValidParentheses.java \
