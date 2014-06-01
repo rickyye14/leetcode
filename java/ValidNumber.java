@@ -1,7 +1,6 @@
 public class ValidNumber {
     public boolean isNumber(String s) {
-        String p = "^\\s*[-+]?\\d*\\.?(\\d*|\\d+([eE][-+]?\\d+)?)\\s*$";
-        //return !s.matches("^\\s*.\\s*$") && s.matches(p);
+        String p = "^\\s*[-+]?(\\.\\d+|\\d+\\.?\\d*)([eE][-+]?\\d+)?\\s*$";
         return s.matches(p);
     }
 
