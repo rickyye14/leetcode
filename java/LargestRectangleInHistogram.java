@@ -7,6 +7,16 @@ public class LargestRectangleInHistogram {
         if (n == 0) {
             return 0;
         }
+        int[] temp = new int[n];
+        for (int i = 0; i < n; ++i) {
+            temp[i] = bars[i];
+        }
+        bars = new int[n + 1];
+        for (int i = 0; i < n; ++i) {
+            bars[i] = temp[i];
+        }
+        bars[n] = 0;
+        ++n;
         int[] stack = new int[n];
         int top = 0;
         int largest = 0;
@@ -27,6 +37,9 @@ public class LargestRectangleInHistogram {
         int[] bars = null;
 
         bars = new int[] {2, 1, 5, 6, 2, 3};
+        System.out.println(solver.largestRectangleArea(bars));
+
+        bars = new int[] {1};
         System.out.println(solver.largestRectangleArea(bars));
     }
 }

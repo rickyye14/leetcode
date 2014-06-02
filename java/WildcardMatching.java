@@ -1,115 +1,38 @@
 public class WildcardMatching {
-    private int preCheck(String s, String p) {
-        int n = s.length();
-        int m = p.length();
-        int start = 0;
-        for (int i = 0; i < m; ++i) {
-            int j = i;
-            while (j < m && (p.charAt(j) == '*' || p.charAt(j) == '?')) {
-                ++j;
-            }
-            i = j;
-            if (j == m) {
-                break;
-            }
-            while (j < m && p.charAt(j) != '*' && p.charAt(j) != '?') {
-                ++j;
-            }
-            int index = s.indexOf(p.substring(i, j), start);
-            if (index < 0) {
-                return 0;
-            }
-            start = index + j - i;
-            i = j - 1;
-        }
-        if (start == n || p.charAt(m - 1) == '*') {
-            return 2;
-        }
-        return 1;
-    }
-
-    private boolean searchPattern(String s, String p, int i, int j, int[] remains) {
-        int n = s.length();
-        int m = p.length();
-        if (i == n && j == m) {
-            return true;
-        }
-        if (i == n) {
-            return remains[j] == 0;
-        }
-        if (j == m) {
-            return false;
-        }
-        if (n - i < remains[j]) {
-            return false;
-        }
-        char ch = p.charAt(j);
-        if (ch == '?') {
-            return searchPattern(s, p, i + 1, j + 1, remains);
-        } else if (ch == '*') {
-            for (int k = i; k <= n && n - k >= remains[j + 1]; ++k) {
-                if (searchPattern(s, p, k, j + 1, remains)) {
-                    return true;
-                }
-            }
-        } else {
-            if (s.charAt(i) != p.charAt(j)) {
-                return false;
-            }
-            return searchPattern(s, p, i + 1, j + 1, remains);
-        }
-        return false;
-    }
-
     public boolean isMatch(String s, String p) {
         if (s == null || p == null) {
             return false;
         }
         int n = s.length();
         int m = p.length();
-        StringBuilder pb = new StringBuilder();
-        for (int i = 0; i < m; ++i) {
-            int j = i;
-            while (j < m && p.charAt(j) != '*') {
-                pb.append(p.charAt(j));
-                ++j;
+        int sp = 0;
+        int pp = 0;
+        int st = -1;
+        int pt = -1;
+        while (sp < n) {
+            if (pp < m) {
+                if (s.charAt(sp) == p.charAt(pp) || p.charAt(pp) == '?') {
+                    ++sp;
+                    ++pp;
+                    continue;
+                }
+                if (p.charAt(pp) == '*') {
+                    st = sp;
+                    pt = ++pp;
+                    continue;
+                }
             }
-            if (j == m) {
-                break;
+            if (pt != -1) {
+                sp = ++st;
+                pp = pt;
+                continue;
             }
-            pb.append('*');
-            while (j < m && p.charAt(j) == '*') {
-                ++j;
-            }
-            i = j - 1;
-        }
-        p = pb.toString();
-        m = p.length();
-        int flag = preCheck(s, p);
-        if (flag == 0) {
             return false;
         }
-        if (flag == 2) {
-            return true;
+        while (pp < m && p.charAt(pp) == '*') {
+            ++pp;
         }
-        String rs = new StringBuilder(s).reverse().toString();
-        String rp = new StringBuilder(p).reverse().toString();
-        flag = preCheck(rs, rp);
-        if (flag == 0) {
-            return false;
-        }
-        if (flag == 2) {
-            return true;
-        }
-        int[] remains = new int[m + 1];
-        remains[m] = 0;
-        for (int i = m - 1; i >= 0; --i) {
-            remains[i] = remains[i + 1];
-            if (p.charAt(i) != '*') {
-                ++remains[i];
-            }
-        }
-        return searchPattern(s, p, 0, 0, remains);
+        return pp == m;
     }
 
     public static void main(String[] args) {
