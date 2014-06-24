@@ -1,28 +1,20 @@
-NAME = leetcode_category
+PDFS = leetcode_category.pdf \
+		resource.pdf
+LATEX = pdflatex
 
-all: $(NAME).pdf
+all:	$(PDFS)
 
-$(NAME).pdf:
+leetcode_category.pdf: leetcode_category.tex
+	$(LATEX) $<
 
-#%.dvi : %.tex
-#	latex $<
-#	latex $<
-
-%.ps : %.dvi
-	dvips -o $@ $<
-
-%.pdf : %.ps
-	ps2pdf $< $@
-
-%.pdf : %.tex
-	pdflatex $<
-	pdflatex $<
-
-%.pdf : %.fig
-	fig2dev -L pdftex $< $@
+resource.pdf: resource.tex
+	$(LATEX) $<
 
 clean:
 	-rm -f *~ *.out *.aux *.dvi *.ps *.pdf *.toc *.lof *.log *.lot *.flg *.bbl *.blg *.idx *.ind *.ilg *.snm *.nav *.fig.bak
 
-view:
-	xdg-open $(NAME).pdf
+view-cat:
+	xdg-open leetcode_category.pdf
+
+view-res:
+	xdg-open resource.pdf
