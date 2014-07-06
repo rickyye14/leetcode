@@ -7,6 +7,18 @@ JC = javac
 CLASSES = \
 		  ListNode.java \
 		  Interval.java \
+		  TreeNode.java \
+		  RandomListNode.java \
+		  LinkedListCycleII.java \
+		  LinkedListCycle.java \
+		  SingleNumberII.java \
+		  SurroundedRegions.java \
+		  WordLadderII.java \
+		  WordLadder.java \
+		  BinaryTreeMaximumPathSum.java \
+		  PascalsTriangleII.java \
+		  FlattenBinaryTreeToLinkedList.java \
+		  InterleavingString.java \
 		  SearchA2DMatrix.java \
 		  SetMatrixZeroes.java \
 		  EditDistance.java \

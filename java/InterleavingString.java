@@ -35,14 +35,6 @@ public class InterleavingString {
                 char c2 = s2.charAt(j - 1);
                 char c3 = s3.charAt(i + j - 2);
                 char c4 = s3.charAt(i + j - 1);
-                if (dp[i - 1][j - 1]) {
-                    if (c1 == c3) {
-                        dp[i][j - 1] = true;
-                    }
-                    if (c2 == c3) {
-                        dp[i - 1][j] = true;
-                    }
-                }
                 if (dp[i - 1][j]) {
                     if (c1 == c4) {
                         dp[i][j] = true;
