@@ -7,6 +7,39 @@ JC = javac
 CLASSES = \
 		  ListNode.java \
 		  Interval.java \
+		  TreeNode.java \
+		  RandomListNode.java \
+		  Point.java \
+		  MaxPointsOnALine.java \
+		  LRUCache.java \
+		  WordBreak.java \
+		  CopyListWithRandomPointer.java \
+		  Candy.java \
+		  LongestConsecutiveSequence.java \
+		  BestTimeToBuyAndSellStockIV.java \
+		  BestTimeToBuyAndSellStockIII.java \
+		  WordLadderII.java \
+		  WordLadder.java \
+		  ValidPalindrome.java \
+		  InterleavingString.java \
+		  ValidateBinarySearchTree.java \
+		  UniqueBinarySearchTrees.java \
+		  BinaryTreeInorderTraversal.java \
+		  RestoreIpAddresses.java \
+		  ReverseLinkedListII.java \
+		  SubsetsII.java \
+		  MergeSortedArray.java \
+		  PartitionList.java \
+		  LargestRectangleInHistogram.java \
+		  RemoveDuplicatesFromSortedListII.java \
+		  RemoveDuplicatesFromSortedList.java \
+		  SearchInRotatedSortedArrayII.java \
+		  RemoveDuplicatesFromSortedArrayII.java \
+		  WordSearch.java \
+		  Subsets.java \
+		  Combinations.java \
+		  MinimumWindowSubstring.java \
+		  SortColors.java \
 		  SearchA2DMatrix.java \
 		  SetMatrixZeroes.java \
 		  EditDistance.java \
@@ -14,8 +47,16 @@ CLASSES = \
 		  ClimbingStairs.java \
 		  SqrtX.java \
 		  TextJustification.java \
+		  PlusOne.java \
 		  ValidNumber.java \
+		  AddBinary.java \
+		  MergeTwoSortedLists.java \
+		  MinimumPathSum.java \
+		  UniquePaths.java \
+		  UniquePathsII.java \
 		  RotateList.java \
+		  PermutationSequence.java \
+		  SpiralMatrixII.java \
 		  LengthOfLastWord.java \
 		  InsertInterval.java \
 		  MergeIntervals.java \
