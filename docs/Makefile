@@ -6,8 +6,10 @@ all:	$(PDFS)
 
 leetcode_category.pdf: leetcode_category.tex
 	$(LATEX) $<
+	$(LATEX) $<
 
 resource.pdf: resource.tex
+	$(LATEX) $<
 	$(LATEX) $<
 
 clean:

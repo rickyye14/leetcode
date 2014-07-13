@@ -15,7 +15,7 @@ public class BinaryTreeMaximumPathSum {
             return 0;
         }
         int leftMax = Math.max(0, searchMax(curr.left));
-        int rightMax = ,ath.max(0, searchMax(curr.right));
+        int rightMax = Math.max(0, searchMax(curr.right));
         maxSum = Math.max(maxSum, curr.val + leftMax + rightMax);
         return curr.val + Math.max(0, Math.max(leftMax, rightMax));
     }
