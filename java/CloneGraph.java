@@ -34,8 +34,5 @@ public class CloneGraph {
         for (UndirectedGraphNode next : node.neighbors) {
             map.get(node).neighbors.add(map.get(next));
         }
-        for (UndirectedGraphNode next : node.neighbors) {
-            buildGraph(next, map, set);
-        }
     }
 }

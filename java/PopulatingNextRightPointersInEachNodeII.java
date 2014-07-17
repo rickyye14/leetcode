@@ -2,27 +2,34 @@ import java.util.ArrayList;
 
 public class PopulatingNextRightPointersInEachNodeII {
     public void connect(TreeLinkNode root) {
-        if (root == null) {
-            return;
-        }
-        ArrayList<TreeLinkNode> current = null;
-        ArrayList<TreeLinkNode> post = new ArrayList<TreeLinkNode>();
-        post.add(root);
-        while (post.size() != 0) {
-            current = post;
-            post = new ArrayList<TreeLinkNode>();
-            int n = current.size();
-            for (int i = 0; i < n - 1; ++i) {
-                TreeLinkNode node = current.get(i);
-                node.next = current.get(i + 1);
-            }
-            for (int i = 0; i < n; ++i) {
-                TreeLinkNode node = current.get(i);
-                if (node.left != null) {
-                    post.add(node.left);
+        TreeLinkNode prev = null;
+        TreeLinkNode post = null;
+        TreeLinkNode curr = root;
+        for ( ; curr != null; ) {
+            prev = null;
+            post = null;
+            for ( ; curr != null; curr = curr.next) {
+                if (curr.left == null && curr.right == null) {
+                    continue;
                 }
-                if (node.right != null) {
-                    post.add(node.right);
+                if (post == null) {
+                    if (curr.left != null) {
+                        post = curr.left;
+                    } else {
+                        post = curr.right;
+                    }
+                }
+                if (curr.left != null) {
+                    if (prev != null) {
+                        prev.next = curr.left;
+                    }
+                    prev = curr.left;
+                }
+                if (curr.right != null) {
+                    if (prev != null) {
+                        prev.next = curr.right;
+                    }
+                    prev = curr.right;
                 }
             }
         }

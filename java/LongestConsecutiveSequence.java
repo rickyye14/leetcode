@@ -32,6 +32,7 @@ public class LongestConsecutiveSequence {
             }
         }
         for (int i = 0; i < n; ++i) {
+            // fault by find(uf, num[i])
             int t = find(uf, map.get(num[i]));
             minValues[t] = Math.min(minValues[t], num[i]);
             maxValues[t] = Math.max(maxValues[t], num[i]);
