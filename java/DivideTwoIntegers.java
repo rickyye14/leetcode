@@ -1,18 +1,22 @@
 public class DivideTwoIntegers {
     public int divide(int dividend, int divisor) {
-        int sign = 1;
+        boolean sign = true;
         long ldividend = (long) dividend;
         long ldivisor = (long) divisor;
         if (ldividend < 0) {
             ldividend = -ldividend;
-            sign = -sign;
+            sign = !sign;
         }
         if (ldivisor < 0) {
             ldivisor = -ldivisor;
-            sign = -sign;
+            sign = !sign;
         }
         if (ldivisor == 1) {
-            return (int) (sign * ldividend);
+            if (sign) {
+                return (int) ldividend;
+            } else {
+                return (int) -ldividend;
+            }
         }
         long quotient = 0;
         long token = 1;
@@ -29,7 +33,11 @@ public class DivideTwoIntegers {
                 token >>= 1;
             }
         }
-        return (int) (sign * quotient);
+        if (sign) {
+            return (int) quotient;
+        } else {
+            return (int) -quotient;
+        }
     }
 
     public static void main(String[] args) {
