@@ -6,6 +6,9 @@ LFLAGS = -O2 -Wall
 CLEANFILES = *.o
 
 PROGS = \
+		integer_to_roman	\
+		container_with_most_water	\
+		regular_expression_matching	\
 		longest_consecutive_sequence	\
 		regular_expression_matching	\
 		palindrome_number	\

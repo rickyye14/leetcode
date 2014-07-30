@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include <cmath>
+#include <cassert>
 
 using std::sort;
 using std::numeric_limits;

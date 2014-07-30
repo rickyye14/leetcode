@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+#include "base_include.h"
 
 #define DEBUG
 
