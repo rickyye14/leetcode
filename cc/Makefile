@@ -1,11 +1,16 @@
 CC = g++
 DEBUG = -g
-C11 = -std=c++0x
-CFLAGS = -O2 -Wall $(DEBUG) $(C11) -c
+CPP0x = -std=c++0x
+CFLAGS = -O2 -Wall $(DEBUG) $(CPP0x) -c
 LFLAGS = -O2 -Wall
 CLEANFILES = *.o
 
 PROGS = \
+		longest_consecutive_sequence	\
+		regular_expression_matching	\
+		palindrome_number	\
+		reverse_integer	\
+		zigzag_conversion	\
 		longest_palindromic_substring	\
 		add_two_numbers	\
 		longest_substring_without_repeating_characters	\
@@ -16,17 +21,47 @@ PROGS = \
 
 all:	$(PROGS)
 
+longest_consecutive_sequence: longest_consecutive_sequence.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+longest_consecutive_sequence.o: longest_consecutive_sequence.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+regular_expression_matching: regular_expression_matching.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+regular_expression_matching.o: regular_expression_matching.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+palindrome_number: palindrome_number.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+palindrome_number.o: palindrome_number.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+reverse_integer: reverse_integer.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+reverse_integer.o: reverse_integer.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+zigzag_conversion: zigzag_conversion.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+zigzag_conversion.o: zigzag_conversion.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 longest_palindromic_substring: longest_palindromic_substring.o
 	$(CC) $(LFLAGS) -o $@ $<
 
 longest_palindromic_substring.o: longest_palindromic_substring.cc
-	$(CC) $(LFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 add_two_numbers: add_two_numbers.o
 	$(CC) $(LFLAGS) -o $@ $<
 
 add_two_numbers.o: add_two_numbers.cc
-	$(CC) $(LFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 longest_substring_without_repeating_characters: longest_substring_without_repeating_characters.o
 	$(CC) $(LFLAGS) -o $@ $<
