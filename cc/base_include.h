@@ -8,6 +8,10 @@
 
 #include <cmath>
 #include <cassert>
+<<<<<<< HEAD
+=======
+#include <cstring>
+>>>>>>> b240d019629dd1f5aba5bcd8deb431e9a16aff9c
 
 using std::sort;
 using std::numeric_limits;

@@ -27,38 +27,36 @@ public:
 };
 
 int main(int argc, char *argv[]) {
+    const int MAX_LEN = 1000;
     RegularExpressionMathching solver;
-    char *s = NULL;
-    char *p = NULL;
-    s = "aa";
-    p = "a";
+    char s[MAX_LEN];
+    char p[MAX_LEN];
+    strcpy(s, "aa");
+    strcpy(p, "a");
     cout << solver.isMatch(s, p) << endl;
 
-    s = "aa";
-    p = "aa";
+    strcpy(s, "aa");
+    strcpy(p, "aa");
     cout << solver.isMatch(s, p) << endl;
 
-    s = "aa";
-    p = "aaa";
+    strcpy(s, "aa");
+    strcpy(p, "aaa");
     cout << solver.isMatch(s, p) << endl;
 
-    s = "aa";
-    p = "a*";
+    strcpy(s, "aa");
+    strcpy(p, "a*");
     cout << solver.isMatch(s, p) << endl;
 
-    s = "aa";
-    p = ".*";
+    strcpy(s, "aa");
+    strcpy(p, ".*");
     cout << solver.isMatch(s, p) << endl;
 
-    s = "ab";
-    p = ".*";
+    strcpy(s, "aab");
+    strcpy(p, "c*a*b*");
     cout << solver.isMatch(s, p) << endl;
 
-    s = "aab";
-    p = "c*a*b*";
+    strcpy(s, "bbbba");
+    strcpy(p, ".*a*a");
     cout << solver.isMatch(s, p) << endl;
-
-    s = "bbbba";
-    p = ".*a*a";
     return 0;
 }

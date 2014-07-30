@@ -9,6 +9,7 @@ CLASSES = \
 		  Interval.java \
 		  TreeNode.java \
 		  RandomListNode.java \
+		  LRUCache.java \
 		  LinkedListCycleII.java \
 		  LinkedListCycle.java \
 		  SingleNumberII.java \
