@@ -6,6 +6,12 @@ LFLAGS = -O2 -Wall
 CLEANFILES = *.o
 
 PROGS = \
+		longest_consecutive_sequence	\
+		letter_combinations_of_a_phone_number	\
+		four_sum	\
+		three_sum_closest	\
+		three_sum	\
+		roman_to_integer	\
 		integer_to_roman	\
 		container_with_most_water	\
 		regular_expression_matching	\
@@ -31,10 +37,46 @@ longest_consecutive_sequence: longest_consecutive_sequence.o
 longest_consecutive_sequence.o: longest_consecutive_sequence.cc
 	$(CC) $(CFLAGS) -o $@ -c $<
 
+letter_combinations_of_a_phone_number: letter_combinations_of_a_phone_number.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+letter_combinations_of_a_phone_number.o: letter_combinations_of_a_phone_number.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+four_sum: four_sum.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+four_sum.o: four_sum.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+three_sum_closest: three_sum_closest.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+three_sum_closest.o: three_sum_closest.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+three_sum: three_sum.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+three_sum.o: three_sum.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+roman_to_integer: roman_to_integer.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+roman_to_integer.o: roman_to_integer.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 integer_to_roman: integer_to_roman.o
 	$(CC) $(LFLAGS) -o $@ $<
 
 integer_to_roman.o: integer_to_roman.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+container_with_most_water: container_with_most_water.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+container_with_most_water.o: container_with_most_water.cc
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 regular_expression_matching: regular_expression_matching.o
