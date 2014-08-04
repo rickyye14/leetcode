@@ -7,20 +7,22 @@ public:
         if (0 == n) {
             return true;
         }
-        char *ch_stock = new char[n];
+        char *ch_stack = new char[n];
         int top = 0;
         for (int i = 0; i < n; ++i) {
-            if (0 == top || '(' == s[i] || '{' == s[i] || '[' == s[i]) {
-                ch_stock[top++] = s[i];
+            if (top != 0 && ('(' == ch_stack[top - 1] && ')' == s[i] 
+                        || '{' == ch_stack[top - 1] && '}' == s[i] 
+                        || '[' == ch_stack[top - 1] && ']' == s[i])) {
+                --top;
             } else {
-                if ('(' == s[i - 1] && ')' == s[i] 
-                        || '{' == s[i - 1] && '}' == s[i] 
-                        || '[' == s[i - 1] && ']' == s[i]) {
-                    --top;
-                }
+                ch_stack[top++] = s[i];
             }
         }
-        delete[] ch_stock;
+        delete[] ch_stack;
         return (0 == top);
     }
 };
+
+int main(int argc, char *argv[]) {
+    return 0;
+}
