@@ -7,6 +7,7 @@ CLEANFILES = *.o
 
 PROGS = \
 		longest_consecutive_sequence	\
+		roman_to_integer	\
 		integer_to_roman	\
 		regular_expression_matching	\
 		palindrome_number	\
@@ -26,6 +27,18 @@ longest_consecutive_sequence: longest_consecutive_sequence.o
 	$(CC) $(LFLAGS) -o $@ $<
 
 longest_consecutive_sequence.o: longest_consecutive_sequence.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+longest_common_prefix: longest_common_prefix.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+longest_common_prefix.o: longest_common_prefix.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+roman_to_integer: roman_to_integer.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+roman_to_integer.o: roman_to_integer.cc
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 integer_to_roman: integer_to_roman.o
