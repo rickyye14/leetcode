@@ -6,7 +6,12 @@ LFLAGS = -O2 -Wall
 CLEANFILES = *.o
 
 PROGS = \
+		surrounded_regions	\
 		longest_consecutive_sequence	\
+		merge_k_sorted_lists	\
+		generate_parentheses	\
+		valid_parentheses	\
+		remove_nth_node_from_end_of_list	\
 		letter_combinations_of_a_phone_number	\
 		four_sum	\
 		three_sum_closest	\
@@ -31,10 +36,40 @@ PROGS = \
 
 all:	$(PROGS)
 
+surrounded_regions: surrounded_regions.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+surrounded_regions.o: surrounded_regions.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 longest_consecutive_sequence: longest_consecutive_sequence.o
 	$(CC) $(LFLAGS) -o $@ $<
 
 longest_consecutive_sequence.o: longest_consecutive_sequence.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+merge_k_sorted_lists: merge_k_sorted_lists.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+merge_k_sorted_lists.o: merge_k_sorted_lists.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+generate_parentheses: generate_parentheses.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+generate_parentheses.o: generate_parentheses.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+valid_parentheses: valid_parentheses.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+valid_parentheses.o: valid_parentheses.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+remove_nth_node_from_end_of_list: remove_nth_node_from_end_of_list.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+remove_nth_node_from_end_of_list.o: remove_nth_node_from_end_of_list.cc
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 letter_combinations_of_a_phone_number: letter_combinations_of_a_phone_number.o
