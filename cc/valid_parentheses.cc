@@ -11,9 +11,9 @@ public:
         int top = 0;
         for (int i = 0; i < n; ++i) {
             //be careful to handle the stack
-            if (top != 0 && ('(' == ch_stack[top - 1] && ')' == s[i] 
-                        || '{' == ch_stack[top - 1] && '}' == s[i] 
-                        || '[' == ch_stack[top - 1] && ']' == s[i])) {
+            if (top != 0 && ( ('(' == ch_stack[top - 1] && ')' == s[i]) 
+                        || ('{' == ch_stack[top - 1] && '}' == s[i]) 
+                        || ('[' == ch_stack[top - 1] && ']' == s[i]) ) ) {
                 --top;
             } else {
                 ch_stack[top++] = s[i];

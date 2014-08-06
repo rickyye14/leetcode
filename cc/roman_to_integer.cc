@@ -1,3 +1,5 @@
+#include "base_include.h"
+
 class RomanToInteger {
 public:
     int romanToInt(string s) {
@@ -12,13 +14,17 @@ public:
         int num = 0;
         int n = s.size();
         for (int i = 0; i < n - 1; ++i) {
-            if (hash[s[i]] < hash[s[i + 1]]) {
-                num -= hash[s[i]];
+            if (hash[(int) s[i]] < hash[(int) s[i + 1]]) {
+                num -= hash[(int) s[i]];
             } else {
-                num += hash[s[i]];
+                num += hash[(int) s[i]];
             }
         }
-        num += hash[s[n - 1]];
+        num += hash[(int) s[n - 1]];
         return num;
     }
 };
+
+int main(int argc, char *argv[]) {
+    return 0;
+}

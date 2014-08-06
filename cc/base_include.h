@@ -13,6 +13,7 @@
 #include <cassert>
 #include <cstring>
 
+using std::find;
 using std::sort;
 using std::numeric_limits;
 using std::cout;
