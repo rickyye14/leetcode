@@ -13,6 +13,9 @@ public:
             if (i != 0 && num[i] == num[i - 1]) {
                 continue;
             }
+            if (num[i + 1] + num[i + 2] > -num[i]) {
+                break;
+            }
             pair<int, int> prev(numeric_limits<int>::min(), numeric_limits<int>::min());
             int left = i + 1;
             int right = n - 1;
