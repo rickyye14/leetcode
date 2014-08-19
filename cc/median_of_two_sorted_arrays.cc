@@ -1,83 +1,44 @@
 #include "base_include.h"
 
-#define DEBUG
-
 class MedianOfTwoSortedArrays {
 public:
     double findMedianSortedArrays(int A[], int m, int B[], int n) {
-        if (0 == (n + m) % 2) {
-            return (findKthElementInTwoArrays(A, m, B, n, (n + m) / 2 - 1) 
-                + findKthElementInTwoArrays(A, m, B, n, (n + m) / 2)) * 0.5;
+        if ( (m + n) % 2 == 0) {
+            return (findKthElementInTwoArrays(A, m, B, n, (m + n) / 2) + 
+                    findKthElementInTwoArrays(A, m, B, n, (m + n) / 2 + 1) ) * 0.5;
         } else {
-            return findKthElementInTwoArrays(A, m, B, n, (n + m) / 2);
+            return findKthElementInTwoArrays(A, m, B, n, (m + n + 1) / 2);
         }
     }
 
 private:
-    int findKthElementInTwoArrays(int A[], int na, int B[], int nb, int k) {
-        int res = -1;
-        int ma = -1, mb = -1;
-        while (true) {
-#ifdef DEBUG
-            cout << "A =";
-            for (int i = 0; i < na; ++i) {
-                cout << " " << A[i];
-            }
-            cout << endl;
-
-            cout << "B =";
-            for (int i = 0; i < nb; ++i) {
-                cout << " " << B[i];
-            }
-            cout << endl;
-
-            cout << "k = " << k << endl;
-#endif
-            if (0 == na) {
-                res = B[k];
-                break;
-            }
-            if (0 == nb) {
-                res = A[k];
-                break;
-            }
-            if (0 == k) {
-                res = min(A[0], B[0]);
-                break;
-            }
-            ma = na >> 1;
-            mb = nb >> 1;
-            if (k < ma + mb + 1) {
-                if (A[ma] < B[mb]) {
-                    nb = mb;
+    int findKthElementInTwoArrays(int A[], int m, int B[], int n, int k) {
+        int l1 = 0, r1 = m - 1, mid1 = 0;
+        int l2 = 0, r2 = n - 1, mid2 = 0;
+        while (l1 <= r1 && l2 <= r2) {
+            mid1 = l1 + (r1 - l1) / 2;
+            mid2 = l2 + (r2 - l2) / 2;
+            if (A[mid1] <= B[mid2]) {
+                if (k <= mid1 - l1 + mid2 - l2 + 1) {
+                    r2 = mid2 - 1;
                 } else {
-                    na = ma;
-                }
-            } else if (k > ma + mb + 1) {
-                if (A[ma] < B[mb]) {
-                    A += ma + 1;
-                    na -= ma + 1;
-                    k -= ma + 1;    //take care of updating k
-                } else {
-                    B += mb + 1;
-                    nb -= mb + 1;
-                    k -= mb + 1;
+                    k -= mid1 - l1 + 1;
+                    l1 = mid1 + 1;
                 }
             } else {
-                if (ma < na - 1 && A[ma + 1] < B[mb]) {
-                    nb = mb;
-                } else if (mb < nb - 1 && B[mb + 1] < A[ma]) {
-                    na = ma;
+                if (k <= mid1 - l1 + mid2 - l2 + 1) {
+                    r1 = mid1 - 1;
                 } else {
-                    res = max(A[ma], B[mb]);
-                    break;
+                    k -= mid2 - l2 + 1;
+                    l2 = mid2 + 1;
                 }
             }
         }
-#ifdef DEBUG
-        cout << "res = " << res << endl;
-#endif
-        return res;
+        if (l1 <= r1) {
+            return A[l1 + k - 1];
+        } else {
+            return B[l2 + k - 1];
+        }
     }
 };
 
