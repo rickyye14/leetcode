@@ -7,6 +7,11 @@ CLEANFILES = *.o
 
 PROGS = \
 		longest_consecutive_sequence	\
+<<<<<<< HEAD
+=======
+		remove_duplicates_from_sorted_array	\
+		reverse_nodes_in_k_group	\
+>>>>>>> cee0291085b1fc5c266c9f29c21db92032414aa3
 		swap_nodes_in_pairs	\
 		merge_k_sorted_lists	\
 		generate_parentheses	\
@@ -48,6 +53,21 @@ longest_consecutive_sequence: longest_consecutive_sequence.o
 longest_consecutive_sequence.o: longest_consecutive_sequence.cc
 	$(CC) $(CFLAGS) -o $@ -c $<
 
+<<<<<<< HEAD
+=======
+remove_duplicates_from_sorted_array: remove_duplicates_from_sorted_array.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+remove_duplicates_from_sorted_array.o: remove_duplicates_from_sorted_array.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+reverse_nodes_in_k_group: reverse_nodes_in_k_group.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+reverse_nodes_in_k_group.o: reverse_nodes_in_k_group.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+>>>>>>> cee0291085b1fc5c266c9f29c21db92032414aa3
 swap_nodes_in_pairs: swap_nodes_in_pairs.o
 	$(CC) $(LFLAGS) -o $@ $<
 
