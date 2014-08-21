@@ -6,8 +6,8 @@ LFLAGS = -O2 -Wall
 CLEANFILES = *.o
 
 PROGS = \
-		surrounded_regions	\
 		longest_consecutive_sequence	\
+		swap_nodes_in_pairs	\
 		merge_k_sorted_lists	\
 		generate_parentheses	\
 		valid_parentheses	\
@@ -46,6 +46,12 @@ longest_consecutive_sequence: longest_consecutive_sequence.o
 	$(CC) $(LFLAGS) -o $@ $<
 
 longest_consecutive_sequence.o: longest_consecutive_sequence.cc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+swap_nodes_in_pairs: swap_nodes_in_pairs.o
+	$(CC) $(LFLAGS) -o $@ $<
+
+swap_nodes_in_pairs.o: swap_nodes_in_pairs.cc
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 merge_k_sorted_lists: merge_k_sorted_lists.o
