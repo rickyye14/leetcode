@@ -53,5 +53,6 @@ public class ValidNumber {
         ValidNumber solver = new ValidNumber();
         System.out.println(solver.isNumber("e9"));
         System.out.println(solver.isNumber("."));
+        System.out.println(solver.isNumber(" +2OO805.8"));
     }
 }
