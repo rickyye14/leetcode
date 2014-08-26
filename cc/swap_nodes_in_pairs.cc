@@ -1,4 +1,5 @@
 #include "base_include.h"
+#include "list_node.h"
 
 class SwapNodesInPairs {
 public:
@@ -22,3 +23,7 @@ public:
         return head;
     }
 };
+
+int main(int argc, char *argv[]) {
+    return 0;
+}
