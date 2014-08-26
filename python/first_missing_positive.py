@@ -2,7 +2,6 @@
 
 class Solution:
     def firstMissingPositive(self, A):
-<<<<<<< HEAD
         n = len(A)
         for i in range(n):
             while 1 <= A[i] and A[i] <= n and A[i] != i + 1 and A[i] != A[A[i] - 1]:
@@ -20,11 +19,6 @@ def main():
     print(solver.firstMissingPositive(A))
     A = [3, 4, 1, -1]
     print(solver.firstMissingPositive(A))
-=======
-
-def main():
-    solver = Solution()
->>>>>>> 2bc44c3983579a698d0ef4332505d32020159440
 
 if __name__ == '__main__':
     main()
