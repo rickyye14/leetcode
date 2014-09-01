@@ -26,12 +26,25 @@ class Solution:
                 break
         for i in range(n):
             for j in range(m):
+<<<<<<< HEAD
                 dp[i + 1][j + 1] = dp[i][j + 1] and s1[i] == s3[i + j + 1] \
                         or dp[i + 1][j] and s2[j] == s3[i + j + 1]
+=======
+                dp[i + 1][j + 1] = dp[i][j + 1] and s1[i] == s3[i + j + 1] or dp[i + 1][j] and s2[j] == s3[i + j + 1]
+>>>>>>> c7b4de0aa11f6f2498fdb87020fa4aea0510df28
         return dp[n][m]
 
 def main():
     solver = Solution()
+<<<<<<< HEAD
+=======
+    s1 = 'aabcc'
+    s2 = 'dbbca'
+    s3 = 'aadbbcbcac'
+    print(solver.isInterleave(s1, s2, s3))
+    s3 = 'aadbbbaccc'
+    print(solver.isInterleave(s1, s2, s3))
+>>>>>>> c7b4de0aa11f6f2498fdb87020fa4aea0510df28
 
 if __name__ == '__main__':
     main()
