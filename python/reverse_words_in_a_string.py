@@ -4,27 +4,26 @@ class Solution:
     # @param s, a string
     # @return a string
     def reverseWords(self, s):
-        if s is None:
-            return None
-        s = s.strip()
+        words = list()
         n = len(s)
-        ls = list(s[::-1])
-        i = 0
-        while i < n:
-            while i < n and ls[i] == ' ':
-                i += 1
-            if i == n:
+        left, right = n - 1, n - 1
+        tokens = list()
+        while right >= 0:
+            while right >= 0 and s[right] == ' ':
+                right -= 1
+            if right < 0:
                 break
-            j = i
-            while j < n and ls[j] != ' ':
-                j += 1
-            ls[i:j] = ls[i:j][::-1]
-            i = j
-        return ''.join(ls)
+            left = right
+            while left >= 0 and s[left] != ' ':
+                left -= 1
+            tokens.append(s[left+1:right+1])
+            right = left
+        return ' '.join(tokens)
 
 def main():
     solver = Solution()
     print(solver.reverseWords("the sky is blue"))
+    print(solver.reverseWords("the sky  is    blue"))
 
 if __name__ == '__main__':
     main()

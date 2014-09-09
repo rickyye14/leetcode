@@ -19,6 +19,7 @@ PROGS = \
 		surrounded_regions.cc	\
 		longest_consecutive_sequence.cc	\
 		binary_tree_inorder_traversal.cc	\
+		minimum_window_substring.cc	\
 		permutations_ii.cc	\
 		wildcard_matching.cc	\
 		count_and_say.cc	\
