@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+#/usr/bin/env python3
 
-from random_list_node import RandomListNode
+import RandomListNode from random_list_node
 
 class Solution:
     # @param head, a RandomListNode
@@ -24,9 +24,9 @@ class Solution:
         ptr = head
         while ptr != None:
             copy_tail.next = ptr.next
-            copy_tail = ptr.next
+            copy_tail = copy_tail.next
             ptr.next = ptr.next.next
-            ptr = ptr.next;
+            ptr = ptr.next
         return copy_head.next
 
 def main():
