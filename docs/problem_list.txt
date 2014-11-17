@@ -1,0 +1,133 @@
+1. Two Sum
+a. Reused index, for example, [3, 2, 4], 6
+
+2. Median of Two Sorted Arrays
+a. Consider the null pointer/reference
+b. [lo1, hi1], [lo2, hi2]
+c. Check if k falls in [lo1, mid1] + [lo2, mid2]
+
+3. Longest Substring Without Repeating Characters
+a. null, "aaa"
+
+4. ZigZag Conversion
+a. nRows = 1
+b. loop = nRows * 2 - 2
+
+5. String to Integer (atoi)
+a. '-+'
+b. overflow int and long
+
+6. Palindrome Number
+a. int temp = x; to avoid wrong equal check at the end
+b. negative int
+c. overflow int
+
+7. Container With Most Water
+a. null and empty
+
+8. Regular Expression Matching
+a. recursion <-> dp
+b. init [s.length()][p.length()], p = xxxx.*a*
+
+9. Roman to Integer
+a. I-1 V-5 X-10 L-50 C-100 D-500 M-1000
+
+10. Integer to Roman
+a. I-1 V-5 X-10 L-50 C-100 D-500 M-1000
+b. while (num >= val) {...}
+
+11. 3Sum
+a. sort array
+b. deal with duplcate
+
+12. Longest Common Prefix
+a. vector<string> &strs
+b. strs is null or empty or strs.size() == 0
+
+13. 3Sum Closest
+a. use one closest variable, don't use distance
+
+14. Letter Combination of a Phone Number
+a. dp <-> recursion
+
+15. 4Sum
+a. sort array
+b. deal with
+
+16. Remove Nth Node From End of List
+a. dummy node
+b. slow & fast node
+
+17. Valid Parentheses
+a. at the end, check if the stack is empty
+
+18. Generate Parentheses
+a. open, closed
+b. recursion exit - open == n and closed = n 
+
+19. Merge k Sorted Lists
+a. 3 -> 2
+
+20. Swap Nodes in Pairs
+a. dummy node
+b. last single node
+
+21. Reverse Nodes in k-Group
+a. check prev.next ?= null
+b. increase iterator!
+c. remaining nodes less than k
+d. delete dummy node
+
+22. Remove Element
+a.
+class Solution {
+public:
+    int removeElement(int A[], int n, int elem) {
+        if (n <= 0) {
+            return 0;
+        }
+        int end = n - 1;
+        for (int i = 0; i <= end; ++i) {
+            if (A[i] == elem) {
+                swap(A[i], A[end--]);
+                --i;
+            }
+        }
+        return (end + 1);
+    }
+};
+b. follow up: less swap? check A[i] == A[end]
+
+23. Remove Duplicates from Sorted Array
+a. 
+
+24. Divide Two Integers
+a. overflow,
+long long p = (long long) dividend;
+long long q = (long long) divisor;
+b. for ( ; p >= q; ) {}
+
+25. Implement strStr()
+a. brute force
+b. KMP
+
+xx. Rotate Image
+a. reverse rows
+b. flip elements
+
+xx. Sort Colors
+a.
+class Solution {
+public:
+    void sortColors(int A[], int n) {
+        int red = 0, blue = n - 1;
+        for (int i = 0; i <= blue; ++i) {
+            if (0 == A[i]) {
+                swap(A[red++], A[i]);
+            } else if (2 == A[i]) {
+                swap(A[blue--], A[i]);
+                --i;
+            }
+        }
+    }
+};
