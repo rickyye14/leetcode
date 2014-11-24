@@ -17,9 +17,10 @@ PROGS = \
 		lru_cache.cc	\
 		copy_list_with_random_pointer.cc	\
 		surrounded_regions.cc	\
+		edit_distance.cc	\
 		longest_consecutive_sequence.cc	\
 		binary_tree_inorder_traversal.cc	\
-		minimum_window_substring.cc	\
+		pow_xn.cc	\
 		permutations_ii.cc	\
 		wildcard_matching.cc	\
 		count_and_say.cc	\

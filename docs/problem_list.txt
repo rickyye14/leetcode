@@ -1,130 +1,1369 @@
 1. Two Sum
 a. Reused index, for example, [3, 2, 4], 6
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &numbers, int target) {
+        if (numbers.size() < 2) {
+            return vector<int> {-1, -1};
+        }
+        unordered_map<int, int> track;
+        for (int i = 0; i < numbers.size(); ++i) {
+            if (track.find(target - numbers[i]) != track.end()) {
+                return vector<int> {track[target - numbers[i]] + 1, i + 1};
+            }
+            track[numbers[i]] = i;
+        }
+        return vector<int> {-1, -1};
+    }
+};
 
 2. Median of Two Sorted Arrays
 a. Consider the null pointer/reference
 b. [lo1, hi1], [lo2, hi2]
-c. Check if k falls in [lo1, mid1] + [lo2, mid2]
+c. Check if k falls in [lo1, mid1] + [lo2, mid2], i.e., k <= mid1 - lo1 + mid2 - lo2
 
 3. Longest Substring Without Repeating Characters
-a. null, "aaa"
+a. empty, "aaa"
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int len_s = s.size();
+        if (0 == len_s) {
+            return 0;
+        }
+        bool mark[256];
+        memset(mark, false, sizeof(mark));
+        int res = 0;
+        int lo = 0, hi = 0;
+        for ( ; hi < len_s; ) {
+            for ( ; hi < len_s && !mark[s[hi]]; ++hi) {
+                mark[s[hi]] = true;
+            }
+            res = max(res, hi - lo);
+            if (hi == len_s) {
+                break;
+            }
+            for ( ; lo < len_s && s[lo] != s[hi]; ++lo) {
+                mark[s[lo]] = false;
+            }
+            mark[s[lo]] = false;
+            ++lo;
+        }
+        return res;
+    }
+};
 
-4. ZigZag Conversion
-a. nRows = 1
+4. Add Two Numbers
+a. use carry
+b. at the end, don't forget to append 1, if carry is non-zero
+
+5. Longest Palindrome Substring
+a. enumerate the center (i) of the palindrome
+b. use two pointers, lo = i, hi = i or lo = i, hi = i + 1
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int len_s = s.size();
+        if (0 == len_s) {
+            return "";
+        }
+        int start = 0;
+        int max_len = 1;
+        for (int i = 0; i < len_s; ++i) {
+            int lo = i;
+            int hi = i;
+            for ( ; lo >= 0 && hi < len_s && s[lo] == s[hi]; --lo, ++hi) {}
+            ++lo;
+            --hi;
+            int len = hi - lo + 1;
+            if (len > max_len) {
+                max_len = len;
+                start = lo;
+            }
+            lo = i;
+            hi = i + 1;
+            for ( ; lo >= 0 && hi < len_s && s[lo] == s[hi]; --lo, ++hi) {}
+            ++lo;
+            --hi;
+            len = hi - lo + 1;
+            if (len > max_len) {
+                max_len = len;
+                start = lo;
+            }
+        }
+        return s.substr(start, max_len);
+    }
+};
+
+6. ZigZag Conversion
+a. string is empty or nRows = 1, just return the 
 b. loop = nRows * 2 - 2
+class Solution {
+public:
+    string convert(string s, int nRows) {
+        int len_s = s.size();
+        if (0 == len_s || 1 == nRows) {
+            return s;
+        }
+        int loop = nRows * 2 - 2;
+        string res;
+        for (int i = 0; i < nRows; ++i) {
+            if (0 == i || nRows - 1 == i) {
+                for (int j = i; j < len_s; j += loop) {
+                    res.append(1, s[j]);
+                }
+            } else {
+                for (int j = i; j < len_s; j += loop) {
+                    res.append(1, s[j]);
+                    if (j + loop - 2 * i < len_s) {
+                        res.append(1, s[j + loop - 2 * i]);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
 
-5. String to Integer (atoi)
-a. '-+'
-b. overflow int and long
+7. Reverse Integer
+a. overflow and 64-bit int
+class Solution {
+public:
+    int reverse(int x) {
+        long long r = 0;
+        while (x != 0) {
+            r = r * 10 + x % 10;
+            x /= 10;
+        }
+        if (r > numeric_limits<int>::max() || r < numeric_limits<int>::min()) {
+            return 0;
+        } else {
+            return (int) r;
+        }
+    }
+};
 
-6. Palindrome Number
+8. String to Integer (atoi)
+a. remove front trailing 0
+b. '-+', check positive or negative
+c. not only 32-bit int, res may overflow 64-bit int
+class Solution {
+public:
+    int atoi(const char *str) {
+        for ( ; *str != '\0' && ' ' == *str; ++str) {}
+        int sign = 1;
+        if ('-' == *str || '+' == *str) {
+            if ('-' == *str) {
+                sign = -1;
+            }
+            ++str;
+        }
+        long long res = 0;
+        for ( ; *str != '\0' && isdigit(*str) && 
+            res < numeric_limits<int>::max(); ++str) {
+            res = res * 10 + *str - '0';
+        }
+        res *= sign;
+        if (res < numeric_limits<int>::min()) {
+            return numeric_limits<int>::min();
+        }
+        if (res > numeric_limits<int>::max()) {
+            return numeric_limits<int>::max();
+        }
+        return static_cast<int>(res);
+    }
+};
+
+9. Palindrome Number
 a. int temp = x; to avoid wrong equal check at the end
 b. negative int
 c. overflow int
+class Solution {
+public:
+    int reverse(int x) {
+        long long r = 0;
+        while (x != 0) {
+            r = r * 10 + x % 10;
+            x /= 10;
+        }
+        if (r > numeric_limits<int>::max() || r < numeric_limits<int>::min()) {
+            return 0;
+        } else {
+            return static_cast<int>(r);
+        }
+    }
+};
 
-7. Container With Most Water
-a. null and empty
+10. Container With Most Water
+a. empty arry
+b. move two pointers
+class Solution {
+public:
+    int maxArea(vector<int> &height) {
+        int left = 0;
+        int right = height.size() - 1;
+        int area = 0;
+        int max_area = 0;
+        for ( ; left < right; ) {
+            area = (right - left) * min(height[left], height[right]);
+            if (max_area < area) {
+                max_area = area;
+            }
+            if (height[left] < height[right]) {
+                ++left;
+            } else {
+                --right;
+            }
+        }
+        return max_area;
+    }
+};
 
-8. Regular Expression Matching
-a. recursion <-> dp
+11. Regular Expression Matching
+a. recursion or dp
 b. init [s.length()][p.length()], p = xxxx.*a*
+class Solution {
+public:
+    bool isMatch(const char *s, const char *p) {
+        if (nullptr == s || nullptr == p) {
+            return false;
+        }
+        return helper(s, p);
+    }
+    
+private:
+    bool helper(const char *s, const char *p) {
+        if ('\0' == *s) {
+            for ( ; '\0' != *p && '*' == *(p + 1); p += 2) {}
+            return ('\0' == *p);
+        }
+        if ('\0' == *p) {
+            return false;
+        }
+        if ('*' == *(p + 1)) {
+            if (*s == *p || '.' == *p) {
+                return helper(s + 1, p) || helper(s, p + 2);
+            } else {
+                return helper(s, p + 2);
+            }
+        } else {
+            if (*s == *p || '.' == *p) {
+                return helper(s + 1, p + 1);
+            }
+        }
+        return false;
+    }
+};
 
-9. Roman to Integer
+12. Roman to Integer
 a. I-1 V-5 X-10 L-50 C-100 D-500 M-1000
 
-10. Integer to Roman
+13. Integer to Roman
 a. I-1 V-5 X-10 L-50 C-100 D-500 M-1000
 b. while (num >= val) {...}
 
-11. 3Sum
-a. sort array
-b. deal with duplcate
-
-12. Longest Common Prefix
+14. Longest Common Prefix
 a. vector<string> &strs
-b. strs is null or empty or strs.size() == 0
+b. strs is empty
+class Solution {
+public:
+    string longestCommonPrefix(vector<string> &strs) {
+        int len_strs = strs.size();
+        if (0 == len_strs) {
+            return "";
+        }
+        int ptr = 0;
+        for (bool flag = true; flag; ++ptr) {
+            char ch = strs[0][ptr];
+            for (auto &s : strs) {
+                if (ptr >= s.size() || s[ptr] != ch) {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        return strs[0].substr(0, ptr - 1);
+    }
+};
 
-13. 3Sum Closest
-a. use one closest variable, don't use distance
+15. 3Sum
+a. edge case: len_num < 3
+b. sort array
+c. deal with duplcate
+class Solution {
+public:
+    vector<vector<int> > threeSum(vector<int> &num) {
+        vector<vector<int> > res;
+        int len_num = num.size();
+        if (len_num < 3) {
+            return res;
+        }
+        sort(num.begin(), num.end());
+        for (int i = 0; i < len_num - 2; ++i) {
+            if (i != 0 && num[i] == num[i - 1]) {
+                continue;
+            }
+            int lo = i + 1;
+            int hi = len_num - 1;
+            for ( ; lo < hi; ) {
+                int sum = num[i] + num[lo] + num[hi];
+                if (sum < 0) {
+                    ++lo;
+                } else if (sum > 0) {
+                    --hi;
+                } else {
+                    res.push_back(vector<int> { num[i], num[lo], num[hi] });
+                    int temp = num[lo];
+                    for ( ; lo < hi && num[lo] == temp; ++lo) {}
+                }
+            }
+        }
+        return res;
+    }
+};
 
-14. Letter Combination of a Phone Number
-a. dp <-> recursion
+16. 3Sum Closest
+a. use one closest variable, don't use difference
+class Solution {
+public:
+    int threeSumClosest(vector<int> &num, int target) {
+        if (num.size() < 3) {
+            return -1;
+        }
+        sort(num.begin(), num.end());
+        int closest = num[0] + num[1] + num[2];
+        for (int i = 0; i < num.size() - 2 && closest != target; ++i) {
+            for (int lo = i + 1, hi = num.size() - 1; lo < hi; ) {
+                int sum = num[i] + num[lo] + num[hi];
+                if (abs(sum - target) < abs(closest - target)) {
+                    closest = sum;
+                }
+                if (sum < target) {
+                    ++lo;
+                } else if (sum > target) {
+                    --hi;
+                } else {
+                    break;
+                }
+            }
+        }
+        return closest;
+    }
+};
 
-15. 4Sum
-a. sort array
-b. deal with
+17. Letter Combination of a Phone Number
+a. dp or recursion
 
-16. Remove Nth Node From End of List
+18. 4Sum
+a. edge case: len_num < 4
+b. sort array
+c. deal with duplicate
+class Solution {
+public:
+    vector<vector<int> > fourSum(vector<int> &num, int target) {
+        vector<vector<int> > res;
+        int len_num = num.size();
+        if (len_num < 4) {
+            return res;
+        }
+        sort(num.begin(), num.end());
+        for (int i = 0; i < len_num - 3; ++i) {
+            if (i != 0 && num[i - 1] == num[i]) {
+                continue;
+            }
+            for (int j = i + 1; j < len_num - 2; ++j) {
+                if (j != i + 1 && num[j - 1] == num[j]) {
+                    continue;
+                }
+                int lo = j + 1;
+                int hi = len_num - 1;
+                for ( ; lo < hi; ) {
+                    int sum = num[i] + num[j] + num[lo] + num[hi];
+                    if (sum < target) {
+                        ++lo;
+                    } else if (sum > target) {
+                        --hi;
+                    } else {
+                        res.push_back(vector<int> { num[i], num[j], num[lo], num[hi] });
+                        int temp = num[lo];
+                        for ( ; lo < hi && num[lo] == temp; ++lo) {}
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
+
+19. Remove Nth Node From End of List
 a. dummy node
-b. slow & fast node
+b. slow and fast pointers
 
-17. Valid Parentheses
+20. Valid Parentheses
 a. at the end, check if the stack is empty
+public class Solution {
+    public boolean isValid(String s) {
+        if (s == null) {
+            return false;
+        }
+        if (s.length() == 0) {
+            return true;
+        }
+        Stack<Character> stack = new Stack<Character>();
+        for (int i = 0; i < s.length(); ++i) {
+            char ch = s.charAt(i);
+            if (stack.isEmpty() || ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            } else {
+                if (ch == ')' && stack.peek() == '(' ||
+                    ch == '}' && stack.peek() == '{' ||
+                    ch == ']' && stack.peek() == '[') {
+                    stack.pop();
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+}
 
-18. Generate Parentheses
+21. Generate Parentheses
 a. open, closed
-b. recursion exit - open == n and closed = n 
+b. recursion exit: open == n and closed = n 
+public class Solution {
+    public ArrayList<String> generateParenthesis(int n) {
+        ArrayList<String> res = new ArrayList<String>();
+        if (n <= 0) {
+            return res;
+        }
+        StringBuilder buffer = new StringBuilder();
+        helper(n, 0, 0, buffer, res);
+        return res;
+    }
+    
+    private void helper(int n, int open, int closed, StringBuilder buffer, ArrayList<String> res) {
+        if (open == n && closed == n) {
+            res.add(buffer.toString());
+            return;
+        }
+        if (open < n) {
+            buffer.append('(');
+            helper(n, open + 1, closed, buffer, res);
+            buffer.deleteCharAt(buffer.length() - 1);
+        }
+        if (closed < open) {
+            buffer.append(')');
+            helper(n, open, closed + 1, buffer, res);
+            buffer.deleteCharAt(buffer.length() - 1);
+        }
+    }
+}
 
-19. Merge k Sorted Lists
-a. 3 -> 2
+22. Merge k Sorted Lists
+a. MapReduce
+b. 3 -> 2
+public class Solution {
+    public ListNode mergeKLists(ArrayList<ListNode> lists) {
+        if (lists == null || lists.size() == 0) {
+            return null;
+        }
+        int n = lists.size();
+        for ( ; n != 1; n = (n + 1) / 2) {
+            for (int i = 0; i * 2 + 1 < n; ++i) {
+                lists.set(i, mergeTwoLists(lists.get(i * 2), lists.get(i * 2 + 1)));
+            }
+            if (n % 2 != 0) {
+                lists.set(n / 2, lists.get(n - 1));
+            }
+        }
+        return lists.get(0);
+    }
+    
+    private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(0);
+        ListNode tail = head;
+        for ( ; l1 != null && l2 != null; tail = tail.next) {
+            if (l1.val < l2.val) {
+                tail.next = l1;
+                l1 = l1.next;
+            } else {
+                tail.next = l2;
+                l2 = l2.next;
+            }
+        }
+        for ( ; l1 != null; tail = tail.next) {
+            tail.next = l1;
+            l1 = l1.next;
+        }
+        for ( ; l2 != null; tail = tail.next) {
+            tail.next = l2;
+            l2 = l2.next;
+        }
+        return head.next;
+    }
+}
 
-20. Swap Nodes in Pairs
+23. Swap Nodes in Pairs
 a. dummy node
 b. last single node
+c. delete dummy node
 
-21. Reverse Nodes in k-Group
+24. Reverse Nodes in k-Group
 a. check prev.next ?= null
 b. increase iterator!
 c. remaining nodes less than k
 d. delete dummy node
 
-22. Remove Element
-a.
+25. Remove Element
+a. don't forget to decrease i when we perform the swap
+b. follow up: less swap? check A[i] == A[end]
 class Solution {
 public:
     int removeElement(int A[], int n, int elem) {
-        if (n <= 0) {
+        if (0 == n) {
             return 0;
         }
-        int end = n - 1;
-        for (int i = 0; i <= end; ++i) {
+        int end = n;
+        for (int i = 0; i < end; ++i) {
             if (A[i] == elem) {
-                swap(A[i], A[end--]);
+                swap(A[i], A[--end]);
                 --i;
             }
         }
-        return (end + 1);
+        return end;
     }
 };
-b. follow up: less swap? check A[i] == A[end]
 
-23. Remove Duplicates from Sorted Array
-a. 
+26. Remove Duplicates from Sorted Array
+a. iterative way
+b. as the array is already sorted, we can apply the binary search
+class Solution {
+public:
+    int removeDuplicates(int A[], int n) {
+        if (0 == n) {
+            return 0;
+        }
+        int num_distinct = 0;
+        int curr = 0;
+        for ( ; curr < n; ) {
+            int lo = curr;
+            int hi = n - 1;
+            for ( ; lo <= hi; ) {
+                int mid = lo + (hi - lo) / 2;
+                if (A[mid] <= A[curr]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            }
+            A[num_distinct++] = A[curr];
+            curr = lo;
+        }
+        return num_distinct;
+    }
+};
 
-24. Divide Two Integers
+27. Divide Two Integers
 a. overflow,
-long long p = (long long) dividend;
-long long q = (long long) divisor;
+long long p = dividend;
+long long q = divisor;
 b. for ( ; p >= q; ) {}
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        long long p = dividend;
+        long long q = divisor;
+        p = abs(p);
+        q = abs(q);
+        long long res = 0;
+        for ( ; p >= q; ) {
+            long long bit = 1;
+            for ( ; p >= (q << bit); ++bit) {}
+            --bit;
+            p -= (q << bit);
+            res += (1 << bit);
+        }
+        return (dividend < 0) ^ (divisor < 0) ? static_cast<int>(-res) : static_cast<int>(res);
+    }
+};
 
-25. Implement strStr()
+28. Implement strStr()
 a. brute force
 b. KMP
+class Solution {
+public:
+    int strStr(char *s, char *p) {
+        int len_s = strlen(s);
+        int len_p = strlen(p);
+        for (int i = 0; i + len_p <= len_s; ++i) {
+            int j = 0;
+            for ( ; j < len_p; ++j) {
+                if (s[i + j] != p[j]) {
+                    break;
+                }
+            }
+            if (j == len_p) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
 
-xx. Rotate Image
+29. Substring with Concatenation of All Words
+
+30. Next Permutation
+a. don't forget break
+class Solution {
+public:
+    void nextPermutation(vector<int> &num) {
+        if (num.size() == 0) {
+            return;
+        }
+        int i = num.size() - 1;
+        for ( ; i > 0; --i) {
+            if (num[i - 1] < num[i]) {
+                for (int j = num.size() - 1; j >= i; --j) {
+                    if (num[j] > num[i - 1]) {
+                        swap(num[i - 1], num[j]);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        int j = num.size() - 1;
+        for ( ; i < j; ++i, --j) {
+            swap(num[i], num[j]);
+        }
+        return;
+    }
+};
+
+31. Longest Valid Parentheses
+a. edge case: empty string
+b. push the index of char into stack
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        if (s.size() == 0) {
+            return 0;
+        }
+        int res = 0;
+        stack<int> cache;
+        for (int i = 0; i < s.size(); ++i) {
+            if ('(' == s[i]) {
+                cache.push(i);
+            } else {
+                if (!cache.empty() && '(' == s[cache.top()]) {
+                    cache.pop();
+                    int last_pos = -1;
+                    if (!cache.empty()) {
+                        last_pos = cache.top();
+                    }
+                    res = max(res, i - last_pos);
+                } else {
+                    cache.push(i);
+                }
+            }
+        }
+        return res;
+    }
+};
+
+32. Search for a Range
+a. leftmost and rightmost search
+class Solution {
+public:
+    vector<int> searchRange(int A[], int n, int target) {
+        vector<int> res {-1, -1};
+        if (nullptr == A || 0 == n) {
+            return res;
+        }
+        if (target < A[0] || target > A[n - 1]) {
+            return res;
+        }
+        res[0] = leftmost_search(A, n, target);
+        res[1] = rightmost_search(A, n, target);
+        return res;
+    }
+    
+    int leftmost_search(int A[], int n, int target) {
+        int lo = 0, hi = n - 1, mid;
+        for ( ; lo <= hi; ) {
+            mid = lo + (hi - lo) / 2;
+            if (A[mid] >= target) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return (A[lo] != target ? -1 : lo);
+    }
+    
+    int rightmost_search(int A[], int n, int target) {
+        int lo = 0, hi = n - 1, mid;
+        for ( ; lo <= hi; ) {
+            mid = lo + (hi - lo) / 2;
+            if (A[mid] <= target) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return (A[hi] != target ? -1 : hi);
+    }
+};
+
+33. Search in Rotated Sorted Array
+a. several conditions
+class Solution {
+public:
+    int search(int A[], int n, int target) {
+        int result = -1;
+        if (0 == n) {
+            return result;
+        }
+        int low = 0, high = n - 1, mid = 0;
+        while (low <= high) {
+            mid = low + (high - low) / 2;
+            if (A[mid] == target) {
+                result = mid;
+                break;
+            }
+            if (A[low] < A[mid]) {
+                if (A[low] <= target && target < A[mid]) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            } else if (A[mid] < A[high]) {
+                if (A[mid] < target && target <= A[high]) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            } else if (A[low] > A[mid]) {
+                high = mid - 1;
+            } else if (A[mid] > A[high]) {
+                low = mid + 1;
+            } else {
+                ++low;
+                --high;
+            }
+        }
+        return result;
+    }
+};
+
+34. Valid Sudoku
+a. check row, col and box
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char> > &board) {
+        int len_row = board.size();
+        if (len_row != 9) {
+            return false;
+        }
+        int len_col = board[0].size();
+        if (len_col != 9) {
+            return false;
+        }
+        bool row_mark[9][9];
+        bool col_mark[9][9];
+        bool box_mark[9][9];
+        memset(row_mark, false, sizeof(row_mark));
+        memset(col_mark, false, sizeof(col_mark));
+        memset(box_mark, false, sizeof(box_mark));
+        
+        for (int row = 0; row < 9; ++row) {
+            for (int col = 0; col < 9; ++col) {
+                if ('.' == board[row][col]) {
+                    continue;
+                }
+                int digit = board[row][col] - '1';
+                int box = (row / 3) * 3 + (col / 3);
+                if (row_mark[row][digit] || col_mark[col][digit] || box_mark[box][digit]) {
+                    return false;
+                }
+                row_mark[row][digit] = true;
+                col_mark[col][digit] = true;
+                box_mark[box][digit] = true;
+            }
+        }
+        
+        return true;
+    }
+};
+
+35. Search Insert Position
+a. check low and high boundary
+b. rightmost search
+class Solution {
+public:
+    int searchInsert(int A[], int n, int target) {
+        if (0 == n) {
+            return 0;
+        }
+        if (target < A[0]) {
+            return 0;
+        }
+        if (target > A[n - 1]) {
+            return n;
+        }
+        int low = 0, high = n - 1, mid = 0;
+        while (low <= high) {
+            mid = low + (high - low) / 2;
+            if (A[mid] >= target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low;
+    }
+};
+
+36. Sudoku Solver
+a. move the index
+b. check validation
+public class Solution {
+    public void solveSudoku(char[][] board) {
+        if (board == null || board.length != 9 || board[0].length != 9) {
+            return;
+        }
+        boolean[][] rowMark = new boolean[9][9];
+        boolean[][] colMark = new boolean[9][9];
+        boolean[][] boxMark = new boolean[9][9];
+        int start = 81;
+        for (int row = 0; row < 9; ++row) {
+            for (int col = 0; col < 9; ++col) {
+                if (board[row][col] == '.') {
+                    if (start == 81) {
+                        start = row * 9 + col;
+                    }
+                    continue;
+                }
+                int digit = board[row][col] - '1';
+                int box = (row / 3) * 3 + (col / 3);
+                rowMark[row][digit] = true;
+                colMark[col][digit] = true;
+                boxMark[box][digit] = true;
+            }
+        }
+        helper(board, start, rowMark, colMark, boxMark);
+        return;
+    }
+    
+    private boolean helper(char[][] board, int curr, boolean[][] rowMark, boolean[][] colMark, boolean[][] boxMark) {
+        if (curr == 81) {
+            return true;
+        }
+        int row = curr / 9;
+        int col = curr % 9;
+        int box = (row / 3) * 3 + (col / 3);
+        int next = curr + 1;
+        for ( ; next != 81 && board[next / 9][next % 9] != '.'; ++next) {}
+        for (int digit = 0; digit < 9; ++digit) {
+            if (rowMark[row][digit] || colMark[col][digit] || boxMark[box][digit]) {
+                continue;
+            }
+            rowMark[row][digit] = true;
+            colMark[col][digit] = true;
+            boxMark[box][digit] = true;
+            board[row][col] = (char) (digit + '1');
+            if (helper(board, next, rowMark, colMark, boxMark)) {
+                return true;
+            }
+            board[row][col] = '.';
+            rowMark[row][digit] = false;
+            colMark[col][digit] = false;
+            boxMark[box][digit] = false;
+        }
+        return false;
+    }
+}
+
+37. Count and Say
+a. two pointers to find same contiguous digit
+class Solution {
+public:
+    string countAndSay(int n) {
+        if (n <= 0) {
+            return "";
+        }
+        string curr = "1";
+        for (int k = 1; k < n; ++k) {
+            string next;
+            for (int lo = 0, hi = 0; lo < curr.size(); lo = hi) {
+                hi = lo;
+                for ( ; hi < curr.size() && curr[lo] == curr[hi]; ++hi) {}
+                int len = hi - lo;
+                next += to_string(len);
+                next.push_back(curr[lo]);
+            }
+            curr = next;
+        }
+        return curr;
+    }
+};
+
+38. Combination Sum II
+a. sort the num array
+b. recurion
+c. be careful about the duplicates
+class Solution {
+public:
+    vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+        vector<vector<int> > res;
+        if (num.size() == 0) {
+            return res;
+        }
+        sort(num.begin(), num.end());
+        vector<int> buf;
+        helper(num, target, 0, buf, res);
+        return res;
+    }
+    
+private:
+    void helper(const vector<int> &num, int target, int start, vector<int> &buf, vector<vector<int> > &res) {
+        if (0 == target) {
+            res.push_back(buf);
+            return;
+        }
+        for (int i = start; i < num.size() && num[i] <= target; ++i) {
+            if (i != start && num[i] == num[i - 1]) {
+                continue;
+            }
+            buf.push_back(num[i]);
+            helper(num, target - num[i], i + 1, buf, res);
+            buf.pop_back();
+        }
+    }
+};
+
+39. Combination Sum
+a. same to above
+b. but we can use one value several times
+class Solution {
+public:
+    vector<vector<int> > combinationSum(vector<int> &num, int target) {
+        vector<vector<int> > res;
+        if (num.size() == 0) {
+            return res;
+        }
+        sort(num.begin(), num.end());
+        vector<int> buf;
+        helper(num, target, 0, buf, res);
+        return res;
+    }
+    
+private:
+    void helper(const vector<int> &num, int target, int start, vector<int> &buf, vector<vector<int> > &res) {
+        if (0 == target) {
+            res.push_back(buf);
+            return;
+        }
+        for (int i = start; i < num.size() && num[i] <= target; ++i) {
+            buf.push_back(num[i]);
+            helper(num, target - num[i], i, buf, res);
+            buf.pop_back();
+        }
+    }
+};
+
+40. First Missing Positive
+a. edge case: empty list
+b. move the pointer, if current number is not at its own place swap it
+c. be careful in swap operation
+public class Solution {
+    public int firstMissingPositive(int[] A) {
+        if (A == null || A.length == 0) {
+            return 1;
+        }
+        for (int i = 0; i < A.length; ++i) {
+            for ( ; 1 <= A[i] && A[i] <= A.length && A[i] != A[A[i] - 1]; ) {
+                int a = A[i];
+                int b = A[A[i] - 1];
+                A[i] = b;
+                A[a - 1] = a;
+            }
+        }
+        for (int i = 0; i < A.length; ++i) {
+            if (i + 1 != A[i]) {
+                return i + 1;
+            }
+        }
+        return A.length + 1;
+    }
+}
+
+41. Trapping Rain Water
+a. edge case: empty list
+b. max_left and max_right
+class Solution {
+public:
+    int trap(int A[], int n) {
+        if (0 == n) {
+            return 0;
+        }
+        vector<int> max_left(n, 0);
+        vector<int> max_right(n, 0);
+        max_left[0] = A[0];
+        for (int i = 1; i < n; ++i) {
+            max_left[i] = max(max_left[i - 1], A[i]);
+        }
+        max_right[n - 1] = A[n - 1];
+        for (int i = n - 2; i >= 0; --i) {
+            max_right[i] = max(max_right[i + 1], A[i]);
+        }
+        int result = 0;
+        for (int i = 1; i < n - 1; ++i) {
+            result += min(max_left[i], max_right[i]) - A[i];
+        }
+        return result;
+    }
+};
+
+follow up: 0 denotes the hole
+
+42. Multiply Strings
+a. use a buffer to store the temporary results
+b. two pointers i and j, buffer[i + j] += num1[i] * num2[j]
+public class Solution {
+    public String multiply(String num1, String num2) {
+        if (num1 == null || num1.length() == 0 || num2 == null || num2.length() == 0) {
+            return "";
+        }
+        int[] buffer = new int[num1.length() + num2.length()];
+        for (int i = 0; i < num1.length(); ++i) {
+            int d1 = num1.charAt(num1.length() - 1 - i) - '0';
+            for (int j = 0; j < num2.length(); ++j) {
+                int d2 = num2.charAt(num2.length() - 1 - j) - '0';
+                buffer[i + j] += d1 * d2;
+            }
+        }
+        for (int i = 0, carry = 0; i < num1.length() + num2.length(); ++i) {
+            int temp = buffer[i] + carry;
+            buffer[i] = temp % 10;
+            carry = temp / 10;
+        }
+        StringBuilder res = new StringBuilder();
+        int k = num1.length() + num2.length() - 1;
+        for ( ; k >= 0 && buffer[k] == 0; --k) {}
+        if (k == -1) {
+            return "0";
+        }
+        for ( ; k >= 0; --k) {
+            res.append((char) ('0' + buffer[k]));
+        }
+        return res.toString();
+    }
+}
+
+43. Wildcard Matching
+a. branch cut: non star char
+b. recursion or dp
+class Solution {
+public:
+    bool isMatch(const char *s, const char *p) {
+        if (nullptr == s || nullptr == p) {
+            return false;
+        }
+        int len_s = strlen(s), len_p = strlen(p);
+        int non_star_in_p = 0;
+        for (int i = 0; i < len_p; ++i) {
+            non_star_in_p += (p[i] != '*');
+        }
+        if (non_star_in_p > len_s) {
+            return false;
+        }
+        bool matched[2][len_p + 1];
+        memset(matched, false, sizeof(matched));
+        matched[0][len_p] = true;
+        for (int j = len_p - 1; j >= 0; --j) {
+            if ('*' == p[j]) {
+                matched[0][j] = true;
+            } else {
+                break;
+            }
+        }
+        for (int i = len_s - 1; i >= 0; --i) {
+            memcpy(matched[1], matched[0], sizeof(matched[0]));
+            memset(matched[0], false, sizeof(matched[0]));
+            for (int j = len_p - 1; j >= 0; --j) {
+                if ('*' == p[j]) {
+                    matched[0][j] = matched[1][j] || matched[0][j + 1];
+                } else {
+                    if (s[i] == p[j] || '?' == p[j]) {
+                        matched[0][j] = matched[1][j + 1];
+                    } else {
+                        matched[0][j] = false;
+                    }
+                }
+            }
+        }
+        return matched[0][0];
+    }
+};
+
+44. Permutations II
+a. permutation formula
+
+45. Permutations
+a. permutation formula
+
+46. Jump Game II
+a. interval cover
+b. unreachable cases
+public class Solution {
+    public int jump(int[] A) {
+        if (A == null) {
+            return -1;
+        }
+        if (A.length <= 1) {
+            return 0;
+        }
+        int last = 0;
+        int curr = 0;
+        int res = 0;
+        for (int i = 0; i < A.length; ++i) {
+            if (last < i) {
+                if (curr < i) {
+                    res = -1;
+                    break;
+                } else {
+                    ++res;
+                    last = curr;
+                }
+            }
+            curr = Math.max(curr, i + A[i]);
+        }
+        return res;
+    }
+}
+
+47. Rotate Image
 a. reverse rows
 b. flip elements
 
-xx. Pow(x, n)
-a. n = 0, 1, -1
-b. overflow, x = 1.00000, n = -2147483648
+48. N-Queens
 
-xx. Anagrams
-a. key -> val, map<string, vector<int> > hs, sorted(s) -> vector<int>:indexes
+49. Pow(x, n)
+a. edge case: n = 0, 1, -1
+b. negative n
+class Solution {
+public:
+    double pow(double x, int n) {
+        if (0 == n) {
+            return 1.0;
+        }
+        if (1 == n) {
+            return x;
+        }
+        if (-1 == n) {
+            return 1.0 / x;
+        }
+        bool sign = true;
+        long long m = n;
+        if (m < 0) {
+            sign = false;
+            m = -m;
+        }
+        double p = 1;
+        double t = x;
+        for ( ; m != 0; m >>= 1) {
+            if (m & 0x1) {
+                p *= t;
+            }
+            t *= t;
+        }
+        if (!sign) {
+            p = 1 / p;
+        }
+        return p;
+    }
+};
+
+50. Anagrams
+a. use tree map to map the sorted string to corresponding index list
 b. traverse hs, key_val is a pair<string, vector<int> >
 c. select hs[key_val.first].size() >= 2
+class Solution {
+public:
+    vector<string> anagrams(vector<string> &strs) {
+        vector<string> res;
+        map<string, vector<int> > hs;
+        for (int i = 0; i < strs.size(); ++i) {
+            string key = strs[i];
+            sort(key.begin(), key.end());
+            hs[key].push_back(i);
+        }
+        for (auto &key_val : hs) {
+            if (hs[key_val.first].size() < 2) {
+                continue;
+            }
+            for (int i = 0; i < hs[key_val.first].size(); ++i) {
+                res.push_back(strs[hs[key_val.first][i]]);
+            }
+        }
+        return res;
+    }
+};
 
-xx. 
+51. N-Queens II
+a. recursion
+b. record the selected colum in each row, check validation
+public class Solution {
+    public int totalNQueens(int n) {
+        if (n <= 0) {
+            return 0;
+        }
+        int[] index = new int[n];
+        return helper(n, 0, index);
+    }
+    
+    int helper(int n, int row, int[] index) {
+        if (row == n) {
+            return 1;
+        }
+        int res = 0;
+        for (int idx = 0; idx < n; ++idx) {
+            index[row] = idx;
+            int k = 0;
+            for ( ; k < row; ++k) {
+                if (index[k] == index[row] || Math.abs(index[k] - index[row]) == row - k) {
+                    break;
+                }
+            }
+            if (k == row) {
+                res += helper(n, row + 1, index);
+            }
+        }
+        return res;
+    }
+}
+
+52. Maximum Subarray
+a. D&C or dp
+class Solution {
+public:
+    int maxSubArray(int A[], int n) {
+        if (nullptr == A || 0 == n) {
+            return 0;
+        }
+        return helper(A, 0, n - 1);
+    }
+
+private:
+    int helper(int A[], int lo, int hi) {
+        if (lo == hi) {
+            return A[lo];
+        }
+        int mid = lo + (hi - lo) / 2;
+        int left_sum = helper(A, lo, mid);
+        int right_sum = helper(A, mid + 1, hi);
+        int crossing_sum = crossing(A, lo, hi, mid);
+        return max(left_sum, max(right_sum, crossing_sum));
+    }
+    
+    int crossing(int A[], int lo, int hi, int mid) {
+        int left_max = -0x3f3f3f3f;
+        int left_sum = 0;
+        for (int i = mid; i >= lo; --i) {
+            left_sum += A[i];
+            left_max = max(left_max, left_sum);
+        }
+        int right_max = -0x3f3f3f3f;
+        int right_sum = 0;
+        for (int i = mid + 1; i <= hi; ++i) {
+            right_sum += A[i];
+            right_max = max(right_max, right_sum);
+        }
+        return left_max + right_max;
+    }
+};
+
+53. Jump Game
+a. interval cover
+class Solution {
+public:
+    bool canJump(int A[], int n) {
+        if (nullptr == A) {
+            return false;
+        }
+        if (n <= 1) {
+            return true;
+        }
+        int furthest = 0;
+        for (int i = 0; i < n && furthest < n - 1; ++i) {
+            if (i > furthest) {
+                return false;
+            }
+            furthest = max(furthest, i + A[i]);
+        }
+        return true;
+    }
+};
+
+54. Spiral Matrix
+a. x, y denote the position
+b. decrease the num_row and num_col by 2 each round
+c. handle when num_row = 1, num_col = 1
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int> > &matrix) {
+        vector<int> res;
+        if (matrix.size() == 0 || matrix[0].size() == 0) {
+            return res;
+        }
+        int num_row = matrix.size();
+        int num_col = matrix[0].size();
+        int x = 0, y = 0;
+        for ( ; num_row > 0 && num_col > 0; num_row -= 2, num_col -= 2) {
+            if (1 == num_row) {
+                for (int j = 0; j < num_col; ++j) {
+                    res.push_back(matrix[x][y++]);
+                }
+                break;
+            }
+            if (1 == num_col) {
+                for (int i = 0; i < num_row; ++i) {
+                    res.push_back(matrix[x++][y]);
+                }
+                break;
+            }
+            for (int j = 0; j < num_col - 1; ++j) {
+                res.push_back(matrix[x][y++]);
+            }
+            for (int i = 0; i < num_row - 1; ++i) {
+                res.push_back(matrix[x++][y]);
+            }
+            for (int j = 0; j < num_col - 1; ++j) {
+                res.push_back(matrix[x][y--]);
+            }
+            for (int i = 0; i < num_row - 1; ++i) {
+                res.push_back(matrix[x--][y]);
+            }
+            ++x;
+            ++y;
+        }
+        return res;
+    }
+};
+
+55. Merge Intervals
+a. 
+
+56.
+
+57.
+
+58.
+
+59.
+
+60.
+
 
 xx. Sort Colors
 a.

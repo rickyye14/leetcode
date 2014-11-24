@@ -6,27 +6,38 @@ public:
         if (nullptr == s || nullptr == p) {
             return false;
         }
-        const char *ss = nullptr;
-        const char *pp = nullptr;
-        while (*s != '\0') {
-            if (*s == *p || '?' == *p) {
-                ++s;
-                ++p;
-            } else if ('*' == *p) {
-                pp = p++;
-                ss = s;
-            } else {
-                if (nullptr == pp) {
-                    return false;
-                }
-                s = ss + 1;
-                p = pp;
+        int len_s = strlen(s);
+        int len_p = strlen(p);
+        int non_star_in_p = 0;
+        for (int j = 0; j < len_p; ++j) {
+            if (p[j] != '*') {
+                ++non_star_in_p;
             }
         }
-        while ('*' == *p) {
-            ++p;
+        if (non_star_in_p > len_s) {
+            return false;
         }
-        return ('\0' == *p);
+
+        bool matched[2][len_p + 1];     //loop array, memory compression
+        memset(matched, false, sizeof(matched));
+        matched[0][len_p] = true;
+
+        for (int j = len_p - 1; j >= 0 && '*' == p[j]; --j) {   //match the trailing '*' in p
+            matched[0][j] = true;
+        }
+
+        for (int i = len_s - 1; i >= 0; --i) {
+            memcpy(&matched[1][0], &matched[0][0], sizeof(matched[0])); //swap matched array
+            memset(&matched[0][0], false, sizeof(matched[0]));
+            for (int j = len_p - 1; j >= 0; --j) {
+                if ('*' == p[j]) {
+                    matched[0][j] = matched[1][j] || matched[0][j + 1]; //use one char in s to match '*' or skip '*'
+                } else if (s[i] == p[j] || '?' == p[j]) {
+                    matched[0][j] = matched[1][j + 1];  //must match one
+                }
+            }
+        }
+        return matched[0][0];
     }
 };
 
